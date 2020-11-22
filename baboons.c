@@ -22,28 +22,29 @@ int left = 0;
 int right = 0;
 int cross_time; // Time to wait while baboons cross
 
-void *left_to_right( void *time ) {
-        int *amountptr = (int*) time;
-        int amount = *amountptr;
+void *left_to_right(void *baboonnum ) {
+        //int *amountptr = (int*) time;
+        int *num = (int*) baboonnum;
+        //int amount = *amountptr;
         int numonrope;
         sem_wait( &mutex );
         sem_wait( &left_to_right_mutex );
         left++;
         if ( left == 1 ) {
                 sem_wait( &rope );
-                printf( "Left baboon waiting\n" );
+                //printf( "Baboon number %d is waiting to cross from left to right\n", num);
         }
         sem_post( &left_to_right_mutex );
         sem_post( &mutex );
         sem_wait( &counter );
         sem_getvalue( &counter, &numonrope );
-        printf( "There are %d baboons crossing from left to right\n",
-                3 - numonrope );
-        sleep( amount );
+        printf( "Baboon#%d has begun crossing, there are %d baboons on the rope going from left to right\n\n",
+                num, 3 - numonrope );
+        sleep( cross_time );
         sem_getvalue( &counter, &numonrope );
-        printf( "A baboon just finished crossing left to right, there are %d on the "
-                "rope\n",
-                2 - numonrope );
+        printf( "Baboon#%d just finished crossing left to right, there are %d on the "
+                "rope\n\n",
+                num, 2 - numonrope);
         sem_post( &counter );
         sem_wait( &left_to_right_mutex );
         left--;
@@ -53,28 +54,29 @@ void *left_to_right( void *time ) {
         pthread_exit( NULL );
 }
 
-void *right_to_left( void *time ) {
-        int *amountptr = (int*) time;
-        int amount = *amountptr;
+void *right_to_left( void *baboonnum ) {
+        //int *amountptr = (int*) time;
+        int *num = (int*) baboonnum;
+        //int amount = *amountptr;
         int numonrope;
         sem_wait( &mutex );
         sem_wait( &right_to_left_mutex );
         right++;
         if ( right == 1 ) {
                 sem_wait( &rope );
-                printf( "Right baboon waiting\n" );
+                //printf( "Baboon number %d is waiting to cross from right to left\n\n", num );
         }
         sem_post( &right_to_left_mutex );
         sem_post( &mutex );
         sem_wait( &counter );
         sem_getvalue( &counter, &numonrope );
-        printf( "There are %d baboons crossing from right to left\n",
-                3 - numonrope );
-        sleep( amount );
+        printf( "Baboon#%d has begun crossing, there are %d baboons on the rope going from right to left\n\n",
+                num, 3 - numonrope );
+        sleep( cross_time );
         sem_getvalue( &counter, &numonrope );
-        printf( "A baboon just finished crossing right to left, there are %d on the "
-                "rope\n",
-                2 - numonrope );
+        printf( "Baboon#%d just finished crossing right to left, there are %d on the "
+                "rope\n\n",
+                num, 2 - numonrope);
         sem_post( &counter );
         sem_wait( &right_to_left_mutex );
         right--;
@@ -94,7 +96,6 @@ int main( int argc, char **argv ) {
                 // direction in the queue
         int rcount = 0;
         char direction;
-
         // Check that arguments are provided
         if ( argc < 3 ) {
                 printf( "Please enter a file name followed by an integer 1-10 which "
@@ -104,9 +105,8 @@ int main( int argc, char **argv ) {
         }
         file = fopen( argv[1], "r" ); // Open file to read order of baboons from
         int gettime = atoi( argv[2] );
+        cross_time = gettime;
         *timetocross = gettime; // Set time to cross variable
-
-        printf( "Time to cross: %d\n", *timetocross );
 
         // Fill the queue of baboons based on the order provided from the file
         while ( ( fscanf( file, "%c", &direction ) != EOF ) ) {
@@ -124,7 +124,13 @@ int main( int argc, char **argv ) {
                 }
         }
         // Print how many baboons are on each side to cross
-        printf( "LCount : %d\nRCount : %d\n", lcount, rcount );
+        printf("\nThere are %d baboons waiting to cross from left to right"
+           " and %d baboons waiting to cross from right to left\n\n",lcount, rcount);
+        printf("The order of baboons is: ");
+        for(int i = 0; i < babooncount; i++){
+            printf("%c ", baboons[i]);
+        }
+        printf("\n\nIt will take each baboon %d seconds to cross\n\n", cross_time);
         // Initialize correct number of threads for each side
         pthread_t l_to_r[lcount];
         int left_thread_count = 0;
@@ -141,12 +147,12 @@ int main( int argc, char **argv ) {
                 if ( baboons[i] == 'L' ) {
                         // printf("Left baboon\n");
                         pthread_create( &l_to_r[left_thread_count], NULL,
-                                        left_to_right, ( void * )timetocross );
+                                        left_to_right, (void *) i);
                         left_thread_count++;
                 } else if ( baboons[i] == 'R' ) {
                         // printf("Right baboon\n");
                         pthread_create( &r_to_l[right_thread_count], NULL,
-                                        right_to_left, ( void * )timetocross );
+                                        right_to_left, (void *) i);
                         right_thread_count++;
                 }
         }
