@@ -22,7 +22,9 @@ int left = 0;
 int right = 0;
 int cross_time; // Time to wait while baboons cross
 
-void *left_to_right( ) {
+void *left_to_right( void *time ) {
+        int *amountptr = (int*) time;
+        int amount = *amountptr;
         int numonrope;
         sem_wait( &mutex );
         sem_wait( &left_to_right_mutex );
@@ -37,7 +39,7 @@ void *left_to_right( ) {
         sem_getvalue( &counter, &numonrope );
         printf( "There are %d baboons crossing from left to right\n",
                 3 - numonrope );
-        sleep( 2 );
+        sleep( amount );
         sem_getvalue( &counter, &numonrope );
         printf( "A baboon just finished crossing left to right, there are %d on the "
                 "rope\n",
@@ -48,10 +50,12 @@ void *left_to_right( ) {
         if ( left == 0 )
                 sem_post( &rope );
         sem_post( &left_to_right_mutex );
-        return ( void * )1;
+        pthread_exit( NULL );
 }
 
-void *right_to_left( ) {
+void *right_to_left( void *time ) {
+        int *amountptr = (int*) time;
+        int amount = *amountptr;
         int numonrope;
         sem_wait( &mutex );
         sem_wait( &right_to_left_mutex );
@@ -66,7 +70,7 @@ void *right_to_left( ) {
         sem_getvalue( &counter, &numonrope );
         printf( "There are %d baboons crossing from right to left\n",
                 3 - numonrope );
-        sleep( 2 );
+        sleep( amount );
         sem_getvalue( &counter, &numonrope );
         printf( "A baboon just finished crossing right to left, there are %d on the "
                 "rope\n",
@@ -77,12 +81,13 @@ void *right_to_left( ) {
         if ( right == 0 )
                 sem_post( &rope );
         sem_post( &right_to_left_mutex );
-        return ( void * )1;
+        pthread_exit( NULL );
 }
 
 int main( int argc, char **argv ) {
         FILE *file; // File to read from
-        int timetocross; // Used to set time taken for baboons to cross
+        int *timetocross = ( int * )malloc(
+                sizeof( int ) ); // Used to set time taken for baboons to cross
         char baboons[100]; // Used to hold queue of baboons
         int babooncount = 0;
         int lcount = 0; // Used to determine how many baboons are going in each
@@ -94,11 +99,14 @@ int main( int argc, char **argv ) {
         if ( argc < 3 ) {
                 printf( "Please enter a file name followed by an integer 1-10 which "
                         "represents the time taken to cross the rope\n" );
+                free( timetocross );
                 return -1;
         }
         file = fopen( argv[1], "r" ); // Open file to read order of baboons from
-        timetocross = atoi( argv[2] ); // Set time to cross variable
-        printf( "Time to cross: %d\n", timetocross );
+        int gettime = atoi( argv[2] );
+        *timetocross = gettime; // Set time to cross variable
+
+        printf( "Time to cross: %d\n", *timetocross );
 
         // Fill the queue of baboons based on the order provided from the file
         while ( ( fscanf( file, "%c", &direction ) != EOF ) ) {
@@ -133,12 +141,12 @@ int main( int argc, char **argv ) {
                 if ( baboons[i] == 'L' ) {
                         // printf("Left baboon\n");
                         pthread_create( &l_to_r[left_thread_count], NULL,
-                                        left_to_right, NULL );
+                                        left_to_right, ( void * )timetocross );
                         left_thread_count++;
                 } else if ( baboons[i] == 'R' ) {
                         // printf("Right baboon\n");
                         pthread_create( &r_to_l[right_thread_count], NULL,
-                                        right_to_left, NULL );
+                                        right_to_left, ( void * )timetocross );
                         right_thread_count++;
                 }
         }
@@ -149,7 +157,7 @@ int main( int argc, char **argv ) {
         for ( int j = 0; j < right_thread_count; j++ ) {
                 pthread_join( r_to_l[j], NULL );
         }
-
+        free( timetocross );
         // Destroy semaphores
         sem_destroy( &rope );
         sem_destroy( &right_to_left_mutex );
