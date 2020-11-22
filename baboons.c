@@ -48,6 +48,7 @@ void *left_to_right( ) {
         if ( left == 0 )
                 sem_post( &rope );
         sem_post( &left_to_right_mutex );
+        return ( void * )1;
 }
 
 void *right_to_left( ) {
@@ -76,6 +77,7 @@ void *right_to_left( ) {
         if ( right == 0 )
                 sem_post( &rope );
         sem_post( &right_to_left_mutex );
+        return ( void * )1;
 }
 
 int main( int argc, char **argv ) {
