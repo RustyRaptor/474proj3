@@ -34,6 +34,7 @@ void *left_to_right(void *baboonnum ) {
                 sem_wait( &rope );
                 //printf( "Baboon number %d is waiting to cross from left to right\n", num);
         }
+        printf( "Baboon number %d is waiting to cross from left to right\n", num);
         sem_post( &left_to_right_mutex );
         sem_post( &mutex );
         sem_wait( &counter );
@@ -62,10 +63,12 @@ void *right_to_left( void *baboonnum ) {
         sem_wait( &mutex );
         sem_wait( &right_to_left_mutex );
         right++;
+        //This ensures that the rope is on this side
         if ( right == 1 ) {
                 sem_wait( &rope );
                 //printf( "Baboon number %d is waiting to cross from right to left\n\n", num );
         }
+        printf( "Baboon number %d is waiting to cross from right to left\n\n", num );
         sem_post( &right_to_left_mutex );
         sem_post( &mutex );
         sem_wait( &counter );
