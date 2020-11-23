@@ -1,6 +1,6 @@
-Luis Mendoza
+Angel Camacho Brandly Ross Ziad Arafat Luis Mendoza
 CS474
-Project 2
+Project 3
 
 We have a makefile in our project that will compile and run the code. 
 When you download and extract the code run these commands. 
