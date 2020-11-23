@@ -14,8 +14,8 @@ First we read the file wich includes the instructions that dictate weather the b
 ## Results: 
 |   Results   |
 |---|
-| ![](474proj3/ImagesOfResults/Project31.JPG)  |
-|  ![](474proj3/ImagesOfResults/Project32.JPG)  |
+| ![](ImagesOfResults/Project31.JPG)  |
+|  ![](ImagesOfResults/Project32.JPG)  |
 |  ![](ImagesOfResults/Project33.JPG)  |
 
 | Code |
