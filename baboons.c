@@ -39,12 +39,12 @@ void *left_to_right(void *baboonnum ) {
         sem_wait( &counter );
         sem_getvalue( &counter, &numonrope );
         printf( "Baboon#%d has begun crossing, there are %d baboons on the rope going from left to right\n\n",
-                num, 3 - numonrope );
+                *num, 3 - numonrope );
         sleep( cross_time );
         sem_getvalue( &counter, &numonrope );
         printf( "Baboon#%d just finished crossing left to right, there are %d on the "
                 "rope\n\n",
-                num, 2 - numonrope);
+                *num, 2 - numonrope);
         sem_post( &counter );
         sem_wait( &left_to_right_mutex );
         left--;
@@ -71,12 +71,12 @@ void *right_to_left( void *baboonnum ) {
         sem_wait( &counter );
         sem_getvalue( &counter, &numonrope );
         printf( "Baboon#%d has begun crossing, there are %d baboons on the rope going from right to left\n\n",
-                num, 3 - numonrope );
+                *num, 3 - numonrope );
         sleep( cross_time );
         sem_getvalue( &counter, &numonrope );
         printf( "Baboon#%d just finished crossing right to left, there are %d on the "
                 "rope\n\n",
-                num, 2 - numonrope);
+                *num, 2 - numonrope);
         sem_post( &counter );
         sem_wait( &right_to_left_mutex );
         right--;
