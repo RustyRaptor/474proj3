@@ -1,4 +1,4 @@
-# Baboon Project report.
+# Baboon Project Report.
 
 ## Bradly Ross, Ziad Arafat, Luis Mendoza, Angel Camacho
 
@@ -14,9 +14,9 @@ First we read the file wich includes the instructions that dictate weather the b
 ## Results: 
 |   Results   |
 |---|
-| ![](474proj3\ImagesOfResults\Project31.JPG)  |
-|  ![](474proj3\ImagesOfResults\Project32.JPG)  |
-|  ![](474proj3\ImagesOfResults\Project33.JPG)  |
+| ![](474proj3/ImagesOfResults/Project31.JPG)  |
+|  ![](474proj3/ImagesOfResults/Project32.JPG)  |
+|  ![](ImagesOfResults/Project33.JPG)  |
 
 | Code |
 | --- |
