@@ -1,5 +1,5 @@
 all: baboons
-	../cppcheck-2.2/cppcheck --enable=warning,performance,portability --error-exitcode=1 -v .
+	#../cppcheck-2.2/cppcheck --enable=warning,performance,portability --error-exitcode=1 -v .
 
 baboons: baboons.o
 	# gcc -Werror -Wall -O0 baboons.o -o baboons -lpthread -lrt
@@ -34,3 +34,7 @@ testshort:
 testlong:
 	# TESTING WITH 6 SECONDS TO DEMONSTRATE LOGIC
 	./baboons input.dat 6
+
+run:
+	# Running configured params
+	./baboons input.dat 3
