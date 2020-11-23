@@ -1,15 +1,15 @@
 # Baboon Project Report.
 
-## Bradly Ross, Ziad Arafat, Luis Mendoza, Angel Camacho
+## Bradley Ross, Ziad Arafat, Luis Mendoza, Angel Camacho
 
 ## Abstract: 
-#### Withing this project we will be taking on problem one. Where we will be conduncting an incremental aproch to solve the baboon problem such that FIFO order is preserved. This will be solved utilizing C Pthreads library.
+#### With this project we will be taking on problem one, where we will be demonstrating an approach on how to use semaphores to synchronize baboons crossing a canyon with a rope. We will show the methods we used to solve this problem and what how we were able to successfully synchronize the baboons crossing. 
 
 ## Introduction: 
-#### Withng this project we will be working on baboon problem where baboons can only cross a canyon by swinging hand-over-hand on the rope. It is important to note the fact that in this problem "baboons" should not enter from oposite directions and meet in the middle other wise they will fall to their death, not to mention no more then three baboons may be on the rope other wise the rope rips and they fall to their death.
+#### With this project we will be working on baboon problem where baboons can only cross a canyon by swinging hand-over-hand on the rope. It is important to note the fact that in this problem "baboons" should not enter from oposite directions and meet in the middle other wise they will fall to their death, not to mention no more then three baboons may be on the rope other wise the rope rips and they fall to their death. The order that the baboons started crossing must also be maintained as they finish crossing. 
 
 ## Methodology:
-#### First we read the file wich includes the instructions that dictate weather the baboos will enter from the left or from the right. To represent each baboon we will be essentially utilizing a thread, the rope will be an array of one hundred indexes which queue the baboons directions. Further more we will also be using a time variable that will be utilized to non other then dictate for how long each thread/baboon runs for.
+#### First we read a file passed as a command line argument which includes the order that the baboons arrive and which direction they are going. This file is read and the directions are stored in an array which will be read in order to create the threads which represent the baboons trying to cross the canyon. To represent each baboon we will be utilizing a thread, the thread will run one of two functions based on which direction they are going. A total of 5 semaphores are used to perform the synchronization tasks. The rope that the baboons are crossing on is represented as one of these semaphores. Representing a baboon travelling either right or left on the rope, the rope semaphore ensure that once a baboons starts going one direction another cannot cross from the other direction until the rope is free. Two semaphores are used to maintain order on the rope, this keeps a baboon from finishing before a baboon that was ahead of it on the rope. Another semaphore which is intialized to three represents the capacity of the rope and prevents more than three baboons from being on the rope. 
 
 ## Results: 
 |   Results   |
