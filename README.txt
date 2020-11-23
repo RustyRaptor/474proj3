@@ -2,13 +2,15 @@ Luis Mendoza
 CS474
 Project 2
 
-first from your terminal/commandline, change to the directory where you save this file , then enter the following command to run this assigment.
+We have a makefile in our project that will compile and run the code. 
+When you download and extract the code run these commands. 
 
- gcc project2.c -lpthread -lrt -Wall -Wextra  -o project2
+make
+
+make run
 
 
-after you run that command, type the following command to run you program:
+alternatively you can compile and run manually
 
-
- ./project2
-
+gcc baboons.c -lpthread -lrt -Wall -Wextra  -o baboons
+./baboons input.dat 3
