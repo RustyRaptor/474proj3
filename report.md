@@ -20,7 +20,6 @@ First we read the file wich includes the instructions that dictate weather the b
 
 | Code |
 | --- |
-| 
 ```C
 #include <fcntl.h>
 #include <pthread.h>
