@@ -1,3 +1,4 @@
+
 #include <fcntl.h>
 #include <pthread.h>
 #include <semaphore.h>
@@ -23,28 +24,26 @@ int right = 0;
 int cross_time; // Time to wait while baboons cross
 
 void *left_to_right(void *baboonnum ) {
-        //int *amountptr = (int*) time;
-        int *num = (int*) baboonnum;
-        //int amount = *amountptr;
-        int numonrope;
+
         sem_wait( &mutex );
         sem_wait( &left_to_right_mutex );
         left++;
         if ( left == 1 ) {
                 sem_wait( &rope );
-                //printf( "Baboon number %d is waiting to cross from left to right\n", num);
         }
+        int *num = (int*) baboonnum;
+        int numonrope;
         sem_post( &left_to_right_mutex );
         sem_post( &mutex );
         sem_wait( &counter );
         sem_getvalue( &counter, &numonrope );
         printf( "Baboon#%d has begun crossing, there are %d baboons on the rope going from left to right\n\n",
-                num, 3 - numonrope );
+                *num, 3 - numonrope );
         sleep( cross_time );
         sem_getvalue( &counter, &numonrope );
         printf( "Baboon#%d just finished crossing left to right, there are %d on the "
                 "rope\n\n",
-                num, 2 - numonrope);
+                *num, 2 - numonrope);
         sem_post( &counter );
         sem_wait( &left_to_right_mutex );
         left--;
@@ -55,28 +54,26 @@ void *left_to_right(void *baboonnum ) {
 }
 
 void *right_to_left( void *baboonnum ) {
-        //int *amountptr = (int*) time;
-        int *num = (int*) baboonnum;
-        //int amount = *amountptr;
-        int numonrope;
+        
         sem_wait( &mutex );
         sem_wait( &right_to_left_mutex );
         right++;
         if ( right == 1 ) {
                 sem_wait( &rope );
-                //printf( "Baboon number %d is waiting to cross from right to left\n\n", num );
         }
+        int *num = (int*) baboonnum;
+        int numonrope;
         sem_post( &right_to_left_mutex );
         sem_post( &mutex );
         sem_wait( &counter );
         sem_getvalue( &counter, &numonrope );
         printf( "Baboon#%d has begun crossing, there are %d baboons on the rope going from right to left\n\n",
-                num, 3 - numonrope );
+                *num, 3 - numonrope );
         sleep( cross_time );
         sem_getvalue( &counter, &numonrope );
         printf( "Baboon#%d just finished crossing right to left, there are %d on the "
                 "rope\n\n",
-                num, 2 - numonrope);
+                *num, 2 - numonrope);
         sem_post( &counter );
         sem_wait( &right_to_left_mutex );
         right--;
@@ -144,15 +141,19 @@ int main( int argc, char **argv ) {
         sem_init( &counter, 0, 3 );
         // Create threads based on order of queue
         for ( int i = 0; i < babooncount; i++ ) {
+                int *tharg = (int*)malloc(sizeof(*tharg));
+                *tharg = i;
+                sleep(1);
                 if ( baboons[i] == 'L' ) {
                         // printf("Left baboon\n");
+                        printf( "Baboon#%d is waiting to cross from left to right\n\n", i );
                         pthread_create( &l_to_r[left_thread_count], NULL,
-                                        left_to_right, (void *) i);
+                                        left_to_right, tharg);
                         left_thread_count++;
                 } else if ( baboons[i] == 'R' ) {
-                        // printf("Right baboon\n");
+                        printf( "Baboon#%d is waiting to cross from right to left\n\n", i );
                         pthread_create( &r_to_l[right_thread_count], NULL,
-                                        right_to_left, (void *) i);
+                                        right_to_left, tharg);
                         right_thread_count++;
                 }
         }
