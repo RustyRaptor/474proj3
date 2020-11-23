@@ -25,9 +25,12 @@ clean:
 memcheck:
 	valgrind ./baboons input.dat 3 -s
 
-test:
+test: testshort testlong
+	# RUNNING ALL TESTS
+testshort:
 	# TESTING WITH 1 SECOND FOR QUICK TEST
 	./baboons input.dat 1
 
+testlong:
 	# TESTING WITH 6 SECONDS TO DEMONSTRATE LOGIC
 	./baboons input.dat 6
