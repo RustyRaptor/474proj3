@@ -18,9 +18,7 @@
 |  ![](ImagesOfResults/Project32.JPG)  |
 |  ![](ImagesOfResults/Project33.JPG)  |
 
-| Code |
-| --- |
-
+ Code
 ```C
 #include <fcntl.h>
 #include <pthread.h>
@@ -218,4 +216,4 @@ int main( int argc, char **argv ) {
 ```
 
 ## Conclusion:
-#### This assigment have the perfecto analogy of how  threads were able to signal parallel to each other as needed. By properly using semaphores we can safety shared memory between thread and process.
+#### The baboons example is an excellent analogy of how threads behave when sharing resources and provides a good way to demonstrate how to safely share that memory with semaphores while still maximizing performance.
