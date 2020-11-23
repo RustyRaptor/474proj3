@@ -216,4 +216,4 @@ int main( int argc, char **argv ) {
 ```
 
 ## Conclusion:
-#### The baboons example is an excellent analogy of how threads behave when sharing resources and provides a good way to demonstrate how to safely share that memory with semaphores while still maximizing performance.
+#### This assignment is the perfect analogy of how threads are able to be synchronized with the use of semaphores. By using threads to represent each baboon, we showed how resources can be shared among different threads running in parallel while maintaining order and synchronization.
