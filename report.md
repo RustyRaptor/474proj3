@@ -20,7 +20,7 @@ First we read the file wich includes the instructions that dictate weather the b
 
 | Code |
 | --- |
-```C
+| ```C
 #include <fcntl.h>
 #include <pthread.h>
 #include <semaphore.h>
@@ -195,8 +195,7 @@ int main( int argc, char **argv ) {
         sem_destroy( &counter );
         return 0;
 }
-``` 
-
+``` |
 
 ## Conclusion:
 ###
