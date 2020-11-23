@@ -34,3 +34,7 @@ testshort:
 testlong:
 	# TESTING WITH 6 SECONDS TO DEMONSTRATE LOGIC
 	./baboons input.dat 6
+
+run:
+	# Running configured params
+	./baboons input.dat 3
