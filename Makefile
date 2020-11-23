@@ -23,4 +23,4 @@ clean:
 	rm -rf *.o
 
 memcheck:
-	valgrind ./baboons input.dat 3 -s
+	valgrind ./baboons input.dat 1 -s

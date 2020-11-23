@@ -141,17 +141,19 @@ int main( int argc, char **argv ) {
         sem_init( &counter, 0, 3 );
         // Create threads based on order of queue
         for ( int i = 0; i < babooncount; i++ ) {
+                int *tharg = (int*)malloc(sizeof(*tharg));
+                *tharg = i;
                 sleep(1);
                 if ( baboons[i] == 'L' ) {
                         // printf("Left baboon\n");
                         printf( "Baboon#%d is waiting to cross from left to right\n\n", i );
                         pthread_create( &l_to_r[left_thread_count], NULL,
-                                        left_to_right, (void *) i);
+                                        left_to_right, tharg);
                         left_thread_count++;
                 } else if ( baboons[i] == 'R' ) {
                         printf( "Baboon#%d is waiting to cross from right to left\n\n", i );
                         pthread_create( &r_to_l[right_thread_count], NULL,
-                                        right_to_left, (void *) i);
+                                        right_to_left, tharg);
                         right_thread_count++;
                 }
         }
