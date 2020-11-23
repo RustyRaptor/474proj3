@@ -3,21 +3,20 @@
 ## Bradly Ross, Ziad Arafat, Luis Mendoza, Angel Camacho
 
 ## Abstract: 
-### Withing this project we will be taking on problem one. Where we will be conduncting an incremental aproch to solve the baboon problem such that FIFO order is preserved. This will be solved utilizing C Pthreads library.
+Withing this project we will be taking on problem one. Where we will be conduncting an incremental aproch to solve the baboon problem such that FIFO order is preserved. This will be solved utilizing C Pthreads library.
 
 ## Introduction: 
-### Withng this project we will be working on baboon problem where baboons can only cross a canyon by swinging hand-over-hand on the rope. It is important to note the fact that in this problem "baboons" should not enter from oposite directions and meet in the middle other wise they will fall to their death, not to mention no more then three baboons may be on the rope other wise the rope rips and they fall to their death.
+Withng this project we will be working on baboon problem where baboons can only cross a canyon by swinging hand-over-hand on the rope. It is important to note the fact that in this problem "baboons" should not enter from oposite directions and meet in the middle other wise they will fall to their death, not to mention no more then three baboons may be on the rope other wise the rope rips and they fall to their death.
 
 ## Methodology:
-### First we read the file wich includes the instructions that dictate weather the baboos will enter from the left or from the right. To represent each baboon we will be essentially utilizing a thread, the rope will be an array of one hundred indexes which queue the baboons directions. Further more we will also be using a time variable that will be utilized to non other then dictate for how long each thread/baboon runs for.
+First we read the file wich includes the instructions that dictate weather the baboos will enter from the left or from the right. To represent each baboon we will be essentially utilizing a thread, the rope will be an array of one hundred indexes which queue the baboons directions. Further more we will also be using a time variable that will be utilized to non other then dictate for how long each thread/baboon runs for.
 
-## Results:
-### 
+## Results: 
 |   Results   |
 |---|
-| ![](ImagesOfResults\Project31.JPG)  |
-|  ![](ImagesOfResults\Project32.JPG)  |
-|  ![](ImagesOfResults\Project33.JPG)  |
+| ![](474proj3\ImagesOfResults\Project31.JPG)  |
+|  ![](474proj3\ImagesOfResults\Project32.JPG)  |
+|  ![](474proj3\ImagesOfResults\Project33.JPG)  |
 
 | Code |
 | --- |
